@@ -15,6 +15,14 @@ function EmployeeList() {
   ];
   const [employeeList, setEmployeeList] = useState(myEmployeeList);
 
+  useEffect(() => {
+    fetch("/api/employees")
+      .then((response) => response.json())
+      .then((json) => {
+        setEmployeeList(json);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <Table striped bordered hover>
       <thead>

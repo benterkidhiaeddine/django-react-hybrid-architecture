@@ -2,6 +2,8 @@ from re import template
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from rest_framework import permissions, viewsets
 
@@ -17,6 +19,7 @@ class Home(TemplateView):
     template_name = "employees/index.html"
 
 
+@method_decorator(login_required, name="dispatch")
 class EmployeeView(TemplateView):
     template_name = "employees/employee.html"
 
