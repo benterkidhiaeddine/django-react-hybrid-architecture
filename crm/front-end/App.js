@@ -1,7 +1,8 @@
 import React from "react";
+import EmployeeList from "./Components/EmployeeList";
 
 function App() {
-  return <h1>Hello React</h1>;
+  return <EmployeeList />;
 }
 
 export default App;
