@@ -1,4 +1,5 @@
 from re import template
+from typing import Any
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 
@@ -22,6 +23,13 @@ class Home(TemplateView):
 @method_decorator(login_required, name="dispatch")
 class EmployeeView(TemplateView):
     template_name = "employees/employee.html"
+
+    def get_context_data(self, **kwargs):
+        return {
+            "department_choices": [
+                {"id": c[0], "name": c[1]} for c in Employee.DEPARTMENT_CHOICES
+            ]
+        }
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):

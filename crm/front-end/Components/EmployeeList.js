@@ -4,17 +4,9 @@ import Table from "react-bootstrap/Table";
 import { DeleteButton, EditButton } from "./Buttons";
 
 function EmployeeList() {
-  const myEmployeeList = [
-    { id: 1, name: "john", department: "Human Resources", salary: 5000 },
-    {
-      id: 2,
-      name: "conner",
-      department: "Research and development",
-      salary: 7000,
-    },
-  ];
-  const [employeeList, setEmployeeList] = useState(myEmployeeList);
+  const [employeeList, setEmployeeList] = useState([]);
 
+  //Load the initials users from the api
   useEffect(() => {
     fetch("/api/employees")
       .then((response) => response.json())
@@ -23,6 +15,7 @@ function EmployeeList() {
       })
       .catch((err) => console.log(err));
   }, []);
+
   return (
     <Table striped bordered hover>
       <thead>

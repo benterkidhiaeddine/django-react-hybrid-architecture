@@ -15,7 +15,16 @@
 
     <title>Employees</title>
   </head>
+
   <body>
+    {{ department_choices|json_script:'department-choices' }}
+
+    <script>
+      //Department list as js variable
+      const DEPARTMENT_CHOICES = JSON.parse(
+        document.getElementById("department-choices").innerText
+      );
+    </script>
     <!--Home of the react app-->
     <div id="root"></div>
 
