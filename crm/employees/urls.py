@@ -11,7 +11,8 @@ router.register(r"employees", EmployeeViewSet, basename="employee")
 
 urlpatterns = [
     # other patterns here
-    path("", Home.as_view(template_name="employees/index.html")),
-    path("employees", EmployeeView.as_view()),
+    path("", Home.as_view(template_name="employees/index.html"), name="react-app"),
+    path("employees/", EmployeeView.as_view(), name="react-app"),
+    path("employees/<path:path>", EmployeeView.as_view(), name="react-app-with-path"),
     path("api/", include(router.urls)),
 ]
