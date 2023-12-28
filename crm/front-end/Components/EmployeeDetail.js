@@ -1,30 +1,36 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useLoaderData } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-export function EmployeeDetail({ employeeId }) {
-  const [employeeDetail, setEmployeeDetail] = useState({});
+export async function loader({ params }) {
+  const response = await fetch(
+    `http://127.0.0.1:8000/api/employees/${params.employeeId}`
+  );
+  const employee = await response.json();
+  return { employee };
+}
 
-  const [name, setName] = useState("");
-  const [department, setDepartment] = useState("");
-  const [salary, setSalary] = useState("");
+export function EmployeeDetail() {
+  const naviagate = useNavigate();
 
-  const employeesURL = `api/employees/${employeeId}/`;
+  //load the initial data for the user
+  const { employee } = useLoaderData();
+
+  const [name, setName] = useState(employee.name);
+  const [department, setDepartment] = useState(employee.department);
+  const [salary, setSalary] = useState(employee.salary);
+
+  //Errors display
+
+  const [errors, setErrors] = useState({});
+  // Url where we are going to update the employee data
+  const employeesURL = `http://127.0.0.1:8000/api/employees/${employee.id}/`;
 
   //Validation state variables
-  const [validated, setValidated] = useState(false);
-
-  useEffect(() => {
-    fetch(employeesURL)
-      .then((response) => response.json())
-      .then((json) => {
-        setEmployeeDetail(json);
-        setName(json.name);
-        setDepartment(json.department);
-        setSalary(json.salary);
-      });
-  }, []);
+  const [validated, setValidated] = useState(true);
 
   //Function that handles the submit of the form
   function handleSubmit(e) {
@@ -32,9 +38,8 @@ export function EmployeeDetail({ employeeId }) {
 
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
-      e.stopPropagation;
+      return;
     }
-
     setValidated(true);
 
     const employee = { name, department, salary };
@@ -47,7 +52,13 @@ export function EmployeeDetail({ employeeId }) {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
       body: JSON.stringify(employee),
-    });
+    })
+      .then((response) => response.json())
+      .then((json) => setErrors(json))
+      .catch((err) => console.err(err));
+
+    //redirect to the employees List
+    naviagate("/");
   }
 
   return (

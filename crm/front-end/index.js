@@ -5,14 +5,30 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //React app
 import App from "./App.js";
 import EmployeeList from "./Components/EmployeeList.js";
+import {
+  EmployeeDetail,
+  loader as employeeLoader,
+} from "./Components/EmployeeDetail.js";
 
 const root = createRoot(document.getElementById("root"));
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <EmployeeList />,
+    },
+    {
+      path: "/edit/:employeeId",
+      element: <EmployeeDetail />,
+      loader: employeeLoader,
+    },
+  ],
+
+  //This is the employees base route
   {
-    path: "/employees",
-    element: <EmployeeList />,
-  },
-]);
+    basename: "/employees",
+  }
+);
 
 root.render(<RouterProvider router={router} />);

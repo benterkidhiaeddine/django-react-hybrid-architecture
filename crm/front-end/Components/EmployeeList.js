@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-
+import { useNavigate } from "react-router-dom";
 import { DeleteButton, EditButton } from "./Buttons";
 
 function EmployeeList() {
@@ -8,7 +8,7 @@ function EmployeeList() {
 
   //Load the initials users from the api
   useEffect(() => {
-    fetch("/api/employees")
+    fetch("http://127.0.0.1:8000/api/employees")
       .then((response) => response.json())
       .then((json) => {
         setEmployeeList(json);
@@ -35,8 +35,8 @@ function EmployeeList() {
               <td>{employee.department}</td>
               <td>{employee.salary}$</td>
               <td>
-                <EditButton />
-                <DeleteButton />
+                <EditButton employeeId={employee.id} />
+                <DeleteButton employeeId={employee.id} />
               </td>
             </tr>
           );
