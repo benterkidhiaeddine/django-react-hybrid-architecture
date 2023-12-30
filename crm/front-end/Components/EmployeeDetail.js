@@ -61,6 +61,10 @@ export function EmployeeDetail() {
     naviagate("/");
   }
 
+  function handleCancel() {
+    naviagate("/");
+  }
+
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="name">
@@ -124,6 +128,9 @@ export function EmployeeDetail() {
 
       <Button variant="primary" type="submit">
         Submit
+      </Button>
+      <Button onClick={() => handleCancel()} variant="secondary">
+        Cancel
       </Button>
     </Form>
   );

@@ -14,7 +14,7 @@ function EmployeeList() {
         setEmployeeList(json);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [employeeList]);
 
   return (
     <Table striped bordered hover>
