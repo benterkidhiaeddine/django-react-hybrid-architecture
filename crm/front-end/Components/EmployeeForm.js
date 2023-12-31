@@ -1,51 +1,36 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-export default function EmployeeForm() {
-  const [name, setName] = useState("");
-  const [department, setDepartment] = useState("");
-  const [salary, setSalary] = useState("");
 
+export default function EmployeeForm({
+  employeeName = "",
+  employeeDepartment = "",
+  employeeSalary = "",
+  handleSubmit,
+}) {
+  console.log(handleSubmit);
+  const [name, setName] = useState(employeeName);
+  const [department, setDepartment] = useState(employeeDepartment);
+  const [salary, setSalary] = useState(employeeSalary);
+
+  console.log({ name, department, salary });
   //Validation state variables
   const [validated, setValidated] = useState(true);
-
-  const employeesURL = `http://127.0.0.1:8000/api/employees/`;
 
   //const navigation
 
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      return;
-    }
-    setValidated(true);
-
-    const employee = { name, department, salary };
-    fetch(employeesURL, {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-
-        "X-CSRFToken": Cookies.get("csrftoken"),
-      },
-      body: JSON.stringify(employee),
-    })
-      .then((response) => response.json())
-      .then((json) => setErrors(json))
-      .catch((err) => console.error(err));
-
-    //redirect to the employees List
+  function handleCancel() {
     navigate("/");
   }
 
   return (
-    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+    <Form
+      noValidate
+      validated={validated}
+      onSubmit={(e) => handleSubmit(e, { name, department, salary })}
+    >
       <Form.Group className="mb-3" controlId="name">
         <Form.Label>Name</Form.Label>
         <Form.Control

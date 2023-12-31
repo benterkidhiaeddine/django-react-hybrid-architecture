@@ -10,6 +10,7 @@ import {
 } from "./Components/EmployeeDetail.js";
 
 import EmployeeForm from "./Components/EmployeeForm.js";
+import EmployeeCreate from "./Components/EmployeeCreate.js";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -25,8 +26,8 @@ const router = createBrowserRouter(
       loader: employeeLoader,
     },
     {
-      path: "createEmployee",
-      element: <EmployeeForm />,
+      path: "/createEmployee",
+      element: <EmployeeCreate />,
     },
   ],
 
