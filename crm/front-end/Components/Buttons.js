@@ -1,10 +1,9 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 export function DeleteButton({ employeeId }) {
-  const navigate = useNavigate();
   function handleClick() {
     fetch(`http://127.0.0.1:8000/api/employees/${employeeId}`, {
       method: "DELETE",
@@ -38,7 +37,6 @@ export function EditButton({ employeeId }) {
 }
 
 export function CreateButton() {
-  console.log("This button is rendered");
   const navigate = useNavigate();
   function navigateCreate() {
     navigate(`/createEmployee`);
