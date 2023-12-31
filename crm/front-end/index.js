@@ -9,6 +9,8 @@ import {
   loader as employeeLoader,
 } from "./Components/EmployeeDetail.js";
 
+import EmployeeForm from "./Components/EmployeeForm.js";
+
 const root = createRoot(document.getElementById("root"));
 
 const router = createBrowserRouter(
@@ -21,6 +23,10 @@ const router = createBrowserRouter(
       path: "/edit/:employeeId",
       element: <EmployeeDetail />,
       loader: employeeLoader,
+    },
+    {
+      path: "createEmployee",
+      element: <EmployeeForm />,
     },
   ],
 

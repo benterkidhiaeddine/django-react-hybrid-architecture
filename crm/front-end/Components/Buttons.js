@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 export function DeleteButton({ employeeId }) {
@@ -14,8 +14,7 @@ export function DeleteButton({ employeeId }) {
         "X-CSRFToken": Cookies.get("csrftoken"),
       },
     });
-
-    navigate("/");
+    window.location.href = "/employees";
   }
   return (
     <Button onClick={handleClick} variant="danger">
@@ -36,4 +35,13 @@ export function EditButton({ employeeId }) {
       Edit
     </Button>
   );
+}
+
+export function CreateButton() {
+  console.log("This button is rendered");
+  const navigate = useNavigate();
+  function navigateCreate() {
+    navigate(`/createEmployee`);
+  }
+  return <Button onClick={() => navigateCreate()}>New Employee</Button>;
 }

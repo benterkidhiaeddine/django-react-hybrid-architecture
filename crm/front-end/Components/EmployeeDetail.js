@@ -1,8 +1,6 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useLoaderData } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 export async function loader({ params }) {
@@ -14,7 +12,7 @@ export async function loader({ params }) {
 }
 
 export function EmployeeDetail() {
-  const naviagate = useNavigate();
+  const navigate = useNavigate();
 
   //load the initial data for the user
   const { employee } = useLoaderData();
@@ -23,10 +21,6 @@ export function EmployeeDetail() {
   const [department, setDepartment] = useState(employee.department);
   const [salary, setSalary] = useState(employee.salary);
 
-  //Errors display
-
-  const [errors, setErrors] = useState({});
-  // Url where we are going to update the employee data
   const employeesURL = `http://127.0.0.1:8000/api/employees/${employee.id}/`;
 
   //Validation state variables
@@ -55,14 +49,14 @@ export function EmployeeDetail() {
     })
       .then((response) => response.json())
       .then((json) => setErrors(json))
-      .catch((err) => console.err(err));
+      .catch((err) => console.error(err));
 
     //redirect to the employees List
-    naviagate("/");
+    navigate("/");
   }
 
   function handleCancel() {
-    naviagate("/");
+    navigate("/");
   }
 
   return (
