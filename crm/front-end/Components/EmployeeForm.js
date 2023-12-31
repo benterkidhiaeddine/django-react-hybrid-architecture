@@ -8,12 +8,11 @@ export default function EmployeeForm({
   employeeSalary = "",
   handleSubmit,
 }) {
-  console.log(handleSubmit);
   const [name, setName] = useState(employeeName);
   const [department, setDepartment] = useState(employeeDepartment);
   const [salary, setSalary] = useState(employeeSalary);
 
-  console.log({ name, department, salary });
+  const employee = { name, department, salary };
   //Validation state variables
   const [validated, setValidated] = useState(true);
 
@@ -29,7 +28,7 @@ export default function EmployeeForm({
     <Form
       noValidate
       validated={validated}
-      onSubmit={(e) => handleSubmit(e, { name, department, salary })}
+      onSubmit={(e) => handleSubmit(e, employee)}
     >
       <Form.Group className="mb-3" controlId="name">
         <Form.Label>Name</Form.Label>

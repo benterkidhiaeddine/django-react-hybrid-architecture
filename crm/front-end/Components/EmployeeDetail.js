@@ -16,7 +16,6 @@ export function EmployeeDetail() {
 
   //load the initial data for the user
   const { currentEmployee } = useLoaderData();
-  console.log(currentEmployee);
   //Function that handles the submit of the form
   function handleSubmit(e, employee) {
     const employeesURL = `http://127.0.0.1:8000/api/employees/${currentEmployee.id}/`;
