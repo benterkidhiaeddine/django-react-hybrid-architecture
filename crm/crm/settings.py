@@ -28,6 +28,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+#List of admins
+
+ADMINS =[
+
+    ("admin" , "admin@email.com")
+] 
+
+
 # Application definition
 
 INSTALLED_APPS = [

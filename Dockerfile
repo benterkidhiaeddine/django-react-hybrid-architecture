@@ -24,7 +24,6 @@ RUN  apt-get install nodejs -y
 ENV PYTHONUNBUFFERED=1
 
 
-
 #specify the project folder
 WORKDIR ./crm-project
 
@@ -33,17 +32,17 @@ COPY Pipfile Pipfile.lock ./
 RUN python -m pip install --upgrade pip
 RUN pip install pipenv && pipenv install --dev --system --deploy
 
-
-#Create django superuser
-RUN python manage.py createsuperuser
-
 COPY crm .
 
 #Install node modules
 RUN npm install
 
+#Run migrations to database
+RUN python manage.py migrate --noinput
+
+#Create super user
+RUN python manage.py initadmin
+
 EXPOSE 8000
 
-#CMD ["python" ,"manage.py" ,"runserver"]
 CMD ["python", "manage.py", "runserver" ,"0.0.0.0:8000"]
-#CMD ["ls"]
